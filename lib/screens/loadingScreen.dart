@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:weather_app/screens/locationScreen.dart';
 import 'package:weather_app/services/locationService.dart';
 import 'package:weather_app/services/api.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class LoadingScreen extends StatefulWidget {
   @override
@@ -18,18 +20,22 @@ class _LoadingScreenState extends State<LoadingScreen> {
     LocationService locationService = new LocationService();
     await locationService.getLocation();
     API api = new API();
-    var weatherData = api.getWeatherData(location: locationService);
+    var weatherData = await api.getWeatherData(location: locationService);
+
+    // print(weatherData);
+
+    Navigator.push(context, MaterialPageRoute(builder: (context){
+      return LocationScreen(locationWeather: weatherData);
+    }));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: RaisedButton(
-          onPressed: () {
-            
-          },
-          child: Text('Get Location'),
+        child: SpinKitDoubleBounce(
+          color: Colors.white,
+          size: 100.0,
         ),
       ),
     );
