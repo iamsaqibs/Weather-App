@@ -13,7 +13,7 @@ class API {
     
     if(response.statusCode == 200){
       var data =  jsonDecode(response.body);
-
+      // print(data);
       return data;
     } else {
       print(response.statusCode);
